@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b0806">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Arcane Realms</title>
+<link rel="preload" href="fonts/cinzel-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/alegreya-sans-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css?v=1">
+<link rel="icon" href="data:,">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+</head>
+<body>
+<div id="app">
+  <canvas id="c"></canvas>
+  <div id="vignette"></div>
+  <div id="floats"></div>
+  <div id="hud" class="hidden">
+    <div id="hurt"></div>
+    <div id="top">
+      <button id="heroPanel" class="frame" aria-label="Character stats">
+        <div class="lvl"><span id="lvlNum">1</span></div>
+        <div class="bars">
+          <div class="hpbar"><i id="hpGhost"></i><i id="hpFill"></i><span id="hpText">100 / 100</span></div>
+          <div class="xpbar"><i id="xpFill"></i></div>
+          <div id="buffs"></div>
+        </div>
+      </button>
+      <div id="wallet">
+        <div class="row1">
+          <button class="chip gold" id="chipGold" aria-label="Gold"><b class="ico" data-i="gold"></b><span id="gold">0</span></button>
+          <button class="chip ess" id="chipEss" aria-label="Essence"><b class="ico" data-i="essence"></b><span id="essence">0</span></button>
+          <button id="btnSettings" class="sq" aria-label="Settings"><b class="ico" data-i="gear"></b></button>
+        </div>
+        <div class="row2"><span class="mini" title="Crystals"><b class="ico" data-i="crystals"></b><em id="crystals">0</em></span><span class="mini" title="Relic Fragments"><b class="ico" data-i="relics"></b><em id="relics">0</em></span><span class="mini" title="Boss Tokens"><b class="ico" data-i="tokens"></b><em id="tokens">0</em></span></div>
+      </div>
+    </div>
+    <button id="objective" class="frame"><small id="objType">MAIN QUEST</small><b id="objName"></b><span id="objDesc"></span><div class="obar"><i id="objFill"></i></div></button>
+    <div id="bossBar"><div class="bn"><b id="bossName"></b><small id="bossSub"></small></div><div class="bb"><i id="bossGhost"></i><i id="bossFill"></i><span id="bossPct"></span></div></div>
+    <div id="zone"></div>
+    <div id="left">
+      <button class="side" data-open="inventory" aria-label="Equipment"><b class="ico" data-i="bag"></b><span>Gear</span><em class="dot" id="dotInv"></em></button>
+      <button class="side" data-open="index" aria-label="Item index"><b class="ico" data-i="book"></b><span>Index</span><em class="dot" id="dotIdx"></em></button>
+      <button class="side" data-open="artifact" aria-label="Artifact"><b class="ico" data-i="trine"></b><span>Trine</span><em class="dot" id="dotArt"></em></button>
+      <button class="side" data-open="stats" aria-label="Character"><b class="ico" data-i="stats"></b><span>Hero</span></button>
+      <button class="side" data-open="quests" aria-label="Quests"><b class="ico" data-i="quest"></b><span>Quests</span></button>
+    </div>
+    <div id="right">
+      <button class="side" data-open="map" aria-label="World map"><b class="ico" data-i="map"></b><span>Map</span></button>
+      <button class="side" data-open="upgrades" aria-label="Upgrades"><b class="ico" data-i="anvil"></b><span>Forge</span><em class="dot" id="dotUp"></em></button>
+    </div>
+    <div id="toasts"></div>
+    <div id="lootFeed"></div>
+    <div id="joyZone"><div id="joy"><div id="joyRing"></div><div id="joyKnob"></div></div></div>
+    <div id="actions">
+      <button id="btnInteract" class="hidden"><b class="ico" data-i="hand"></b><span id="interactLbl"></span></button>
+      <button id="btnAttack" class="act big" aria-label="Attack"><b class="ico" data-i="sword"></b></button>
+      <button id="btnSkill" class="act" aria-label="Skill"><b class="ico" data-i="star"></b><svg class="cd" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/></svg><em id="skillTime"></em><small id="skillName"></small></button>
+      <button id="btnDash" class="act sm" aria-label="Dash"><b class="ico" data-i="dash"></b><svg class="cd" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18"/></svg></button>
+      <button id="btnFlask" class="act sm" aria-label="Healing flask"><b class="ico" data-i="flask"></b><em id="flaskN">3</em></button>
+    </div>
+    <div id="fps"></div>
+  </div>
+  <div id="menu" class="hidden" role="dialog" aria-modal="true">
+    <div class="sheet">
+      <div class="mhead"><button id="menuBack" class="sq" aria-label="Back">‹</button><h2 id="menuTitle"></h2><div id="menuWallet"></div><button id="menuClose" class="sq" aria-label="Close">✕</button></div>
+      <div id="menuTabs"></div>
+      <div id="menuBody"></div>
+    </div>
+  </div>
+  <div id="detail" class="hidden"><div class="card" id="detailCard"></div></div>
+  <div id="reveal" class="hidden"><div class="rays"></div><div class="rcard" id="revealCard"></div></div>
+  <div id="banner" class="hidden"></div>
+  <div id="death" class="hidden"><h2>You have fallen</h2><p>The woodland claims the careless. Your gear and progress are safe.</p><button id="btnRise" class="btn gold">Rise Again</button></div>
+  <div id="fade"></div>
+  <div id="title">
+    <div class="tbg"></div>
+    <div class="tcontent">
+      <div class="logo"><small>A FANTASY ACTION RPG</small><h1>ARCANE<br>REALMS</h1><div class="tri"></div></div>
+      <p class="tag">Delve the dark woodland. Claim its relics. Awaken the Trine Core.</p>
+      <div id="loadMsg">Kindling the torches…</div>
+      <button id="btnContinue" class="btn gold hidden">Continue</button>
+      <button id="btnNew" class="btn hidden">New Game</button>
+      <button id="btnTitleSettings" class="btn ghost sm hidden">Settings</button>
+      <p class="tip">Best played in portrait · WASD + J/K/L/Space on desktop</p>
+      <p class="ver">v1 · Release 1 · original procedural art &amp; audio</p>
+    </div>
+  </div>
+  <noscript>Arcane Realms needs JavaScript and WebGL.</noscript>
+</div>
+<script type="module" src="src/main.js?v=1"></script>
+</body>
+</html>
