@@ -258,3 +258,6 @@ button { font: inherit; color: inherit; border: 0; background: none; padding: 0;
 @media (min-aspect-ratio: 4/5) { #objective { top: calc(var(--st) + 10px); } #bossBar { top: calc(var(--st) + 80px); } #left, #right { top: calc(var(--st) + 100px); } }
 @media (max-height: 640px) { #left, #right { top: calc(var(--st) + 120px); gap: 5px; } .side { height: 44px; } .side span { display: none; } #objective { top: calc(var(--st) + 80px); } }
 .bossOn #toasts { top: calc(var(--st) + 200px); }
+.set { flex-wrap: wrap; } .seg button { padding: 6px 8px; }
+.mhead h2 { font-size: 18px; line-height: 1.1; }
+.bossOn #objective { display: none; } .bossOn #bossBar { top: calc(var(--st) + 86px); } .bossOn #toasts { top: calc(var(--st) + 130px); }

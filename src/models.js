@@ -62,7 +62,7 @@ export function buildEnemy(type) {
     const sw = mesh(new THREE.BoxGeometry(0.07, 1.0, 0.03), std(0xb0b0b8, { metalness: 0.7, roughness: 0.3 }), 0, -0.9, 0.12, P.arms[1]); sw.rotation.x = 0.3;
     P.legs = [-1, 1].map((s) => { const l = pivot(body, s * 0.16, 0.55, 0); mesh(new THREE.BoxGeometry(0.2, 0.55, 0.22), st, 0, -0.28, 0, l); return l; }); eyeH = 2.1;
   } else if (type === 'gloomroot') {
-    const bark = std(0x3a2a24, { map: tex('bark') }), dark = std(0x1e1614), moss = std(0x2a4a30), heartM = glow(0xff3a5a, 3);
+    const bark = std(0x8a6a56, { map: tex('bark') }), dark = std(0x3a2a24), moss = std(0x4f9a58, { emissive: 0x1a4a22, emissiveIntensity: 0.6 }), heartM = glow(0xff3a5a, 3), vein = glow(0x6dff9a, 2.6);
     const trunk = mesh(new THREE.CylinderGeometry(0.75, 1.05, 2.3, 8), bark, 0, 2.0, 0, body); trunk.scale.set(1, 1, 0.8);
     const chest = mesh(new THREE.CylinderGeometry(1.05, 0.8, 0.9, 8), bark, 0, 3.4, 0, body); chest.scale.set(1.1, 1, 0.8);
     const cav = mesh(new THREE.SphereGeometry(0.42, 10, 8), dark, 0, 2.95, 0.45, body); cav.scale.set(1, 1.2, 0.5);
@@ -73,6 +73,9 @@ export function buildEnemy(type) {
     P.arms = [-1, 1].map((s) => { const a = pivot(body, s * 1.1, 3.55, 0); const u = mesh(new THREE.CylinderGeometry(0.22, 0.28, 1.5, 6), bark, 0, -0.7, 0, a); const el = pivot(a, 0, -1.45, 0); mesh(new THREE.CylinderGeometry(0.15, 0.22, 1.3, 6), bark, 0, -0.6, 0.0, el);
       for (let k = 0; k < 4; k++) { const c = mesh(new THREE.ConeGeometry(0.07, 0.6, 4), dark, (k - 1.5) * 0.12, -1.35, 0.1, el); c.rotation.x = Math.PI; } return { a, el }; });
     P.legs = [-1, 1].map((s) => { const l = pivot(body, s * 0.6, 1.0, 0); mesh(new THREE.CylinderGeometry(0.3, 0.45, 1.0, 6), bark, 0, -0.5, 0, l); for (let k = 0; k < 3; k++) { const rt = mesh(new THREE.CylinderGeometry(0.06, 0.16, 0.9, 5), bark, 0, -0.9, 0, l); rt.rotation.z = (k - 1) * 0.9; rt.rotation.x = 0.3; } return l; });
+    // glowing sap veins + a soft green lantern so the elder reads against the dark arena
+    for (let i = 0; i < 7; i++) { const a = i / 7 * Math.PI * 2; const v = mesh(new THREE.BoxGeometry(0.06, 1.2 + (i % 3) * 0.4, 0.06), vein, Math.sin(a) * 0.86, 2.0 + (i % 2) * 0.5, Math.cos(a) * 0.7, body); v.rotation.z = (i % 2 ? 1 : -1) * 0.25; }
+    const gl = new THREE.PointLight(0x7affa0, 7, 9, 1.6); gl.position.set(0, 3.2, 1.6); body.add(gl);
     eyeH = 5.6;
   }
   g.userData = { P, mats, eyeH };

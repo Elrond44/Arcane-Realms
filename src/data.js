@@ -182,7 +182,7 @@ export const ENEMIES = {
   wisp: { name: 'Ember Wisp', cls: 'caster', hp: 28, atk: 11, def: 0, speed: 2.5, range: 8.5, keep: 5.5, cd: 3.2, windup: 0.9, detect: 10, leash: 18, xp: 12, gold: [2, 5], essence: [2, 5], poise: 8, size: 0.5, el: 'fire', drop: 0.1, proj: { speed: 7.5, color: 0xff8a3a, kind: 'orb', homing: 1.6 }, color: 0xff7a2a, fly: true },
   sporemender: { name: 'Sporemender', cls: 'support', hp: 42, atk: 4, def: 2, speed: 2.4, range: 7, keep: 7, cd: 4.5, windup: 1.0, detect: 9, leash: 16, xp: 14, gold: [4, 8], essence: [1, 3], poise: 14, size: 0.7, el: 'nature', drop: 0.12, heal: 0.18, color: 0xb05aa8 },
   sentinel: { name: 'Ruin Sentinel', cls: 'elite', hp: 300, atk: 20, def: 14, speed: 2.4, range: 1.9, cd: 2.2, windup: 0.6, detect: 9, leash: 14, xp: 70, gold: [25, 40], relics: [1, 2], poise: 120, size: 1.15, el: 'phys', drop: 0.75, guard: 0.6, charge: 8, color: 0x8a8678, elite: true },
-  gloomroot: { name: 'Gloomroot, the Hollow Elder', cls: 'boss', hp: 1600, atk: 22, def: 10, speed: 1.6, range: 3, cd: 1.6, windup: 1.0, detect: 30, leash: 40, xp: 400, gold: [180, 240], relics: [4, 6], essence: [40, 60], crystals: [6, 10], tokens: [1, 1], poise: 9999, size: 3.2, el: 'nature', drop: 1, color: 0x3a2a24, boss: true },
+  gloomroot: { name: 'Gloomroot, the Hollow Elder', cls: 'boss', hp: 1250, atk: 22, def: 10, speed: 1.6, range: 3, cd: 1.6, windup: 1.0, detect: 30, leash: 40, xp: 400, gold: [180, 240], relics: [4, 6], essence: [40, 60], crystals: [6, 10], tokens: [1, 1], poise: 9999, size: 3.2, el: 'nature', drop: 1, color: 0x3a2a24, boss: true },
 };
 export const enemyScale = (lvl) => ({ hp: 1 + 0.24 * (lvl - 1) + 0.012 * (lvl - 1) * (lvl - 1), atk: 1 + 0.15 * (lvl - 1), def: 1 + 0.1 * (lvl - 1), rew: 1 + 0.18 * (lvl - 1) });
 

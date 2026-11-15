@@ -126,7 +126,7 @@ export function buildWoodland(quality) {
   for (let i = 0; i < 14; i++) { const a = i / 14 * TAU; if (Math.abs(a - Math.PI / 2) < 0.35) continue; const x = Math.cos(a) * 14.4, z = -74 + Math.sin(a) * 14.4; const m = new THREE.Mesh(new THREE.BoxGeometry(1.0, 3 + (i % 2), 0.7), M.stoneDark); m.position.set(x, 1.6, z); m.rotation.y = -a; m.castShadow = true; root.add(m); }
   // ---- enchanted pathway stones: faint rune lights along the main trail ----
   const pathStones = []; for (const [pts] of WOOD.paths) for (let i = 0; i < pts.length - 1; i++) { const [ax, az] = pts[i], [bx, bz] = pts[i + 1]; const L = Math.hypot(bx - ax, bz - az); for (let d = 2; d < L; d += 5) { const t = d / L; const nx = -(bz - az) / L, nz = (bx - ax) / L; const side = (Math.floor(d / 5) % 2 ? 1 : -1) * 2.3; pathStones.push({ x: ax + (bx - ax) * t + nx * side, z: az + (bz - az) * t + nz * side, ry: rnd() * 6, s: 1 }); } }
-  const psGeo = new THREE.CylinderGeometry(0.22, 0.3, 0.16, 6); psGeo.translate(0, 0.06, 0); root.add(instanced(psGeo, emissive(0x7affd8, 0.9), pathStones));
+  const psGeo = new THREE.CylinderGeometry(0.22, 0.3, 0.16, 6); psGeo.translate(0, 0.06, 0); root.add(instanced(psGeo, emissive(0x3fbf9a, 0.45), pathStones));
   // ---- portal (arrival) ----
   const portal = portalMesh(0xa98bff, 1.55); const pf = new THREE.Group(); pf.add(portal); portal.position.y = 1.95;
   const ringM = new THREE.Mesh(new THREE.TorusGeometry(1.75, 0.22, 8, 32), M.stone); ringM.position.y = 1.95; pf.add(ringM);

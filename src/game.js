@@ -33,7 +33,9 @@ export class Game {
   emit(n, d) { for (const f of this.handlers[n] || []) f(d); }
   toast(text, kind = '') { this.emit('toast', { text, kind }); }
   // ---------------- state / stats ----------------
-  start(s) { this.s = s; this.recalc(); const H = this.hero; H.hp = s.hp && s.hp > 0 ? Math.min(s.hp, this.st.maxHp) : this.st.maxHp; this.refreshGear(); this.playing = true; this.paused = false;
+  start(s) { this.s = s;
+    if (!s.equip.weapon) { let w = s.inv.find((it) => tmpl(it).slot === 'weapon' && tmpl(it).req <= s.level); if (!w) { w = makeItem('rusted_blade', 1, 4321); s.inv.push(w); s.index.rusted_blade = s.index.rusted_blade || { n: 1, at: Date.now() }; } s.equip.weapon = w.id; }
+    this.recalc(); const H = this.hero; H.hp = s.hp && s.hp > 0 ? Math.min(s.hp, this.st.maxHp) : this.st.maxHp; this.refreshGear(); this.playing = true; this.paused = false;
     const region = s.region || 'citadel'; this.loadRegion(region, s.pos); this.questTick(); this.emit('state'); }
   recalc() { const prevMax = this.st ? this.st.maxHp : 0; this.st = computeStats(this.s, this.buffs); if (prevMax && this.hero.hp > this.st.maxHp) this.hero.hp = this.st.maxHp; this.trail.color.set(WEAPONS[this.st.cat].trail); this.emit('stats'); }
   gearLook() { const g = {}; for (const slot of SLOTS) { const id = this.s.equip[slot]; const it = id && this.s.inv.find((x) => x.id === id); if (!it) continue; const t = tmpl(it); g[slot] = slot === 'weapon' ? { cat: t.cat, look: t.look } : t.look; } return g; }
