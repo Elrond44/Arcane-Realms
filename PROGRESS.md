@@ -18,8 +18,15 @@
 - Versioned save with checksum, backup, sanitize, corruption handling; quality presets + auto-detect
 - Tests (outside repo, /workspace/arcane-realms/tests): smoke, combat, menus, boss, save, tour
 
-### Next (Release 1 finish)
-- Publish to GitHub Pages, live verification, screenshots in shots/r1
+### Published
+- Live: https://elrond44.github.io/Arcane-Realms/ (GitHub Pages from main /)
+- Screenshots: shots/r1/
+
+### Known limitations / next polish
+- Only tested headless (software GL); real-phone performance and balance need play-testing
+- Hero is small at default zoom (by design); no pinch-zoom yet
+- Woodland lighting is dark/moody; may want a brightness slider
+- Desktop/landscape layout works but is not the focus
 
 ## Later releases (brief phases 3–5)
 - Phase 3: Crystal Caverns, Ancient Catacombs regions + region bosses; unlock via Boss Tokens on the world map
